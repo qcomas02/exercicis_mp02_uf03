@@ -24,5 +24,5 @@ WHERE AUTOR = p_autor;
 -- La clàusula END indica el final del procediment.
 END //
 -- Modifiquem el delimitador de sentències
-
+-- a l'estàndard que és ;
 DELIMITER ;
