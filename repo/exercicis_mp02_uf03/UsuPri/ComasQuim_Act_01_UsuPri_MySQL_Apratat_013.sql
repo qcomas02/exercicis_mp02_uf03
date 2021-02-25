@@ -1,0 +1,1 @@
+DROP USER 'comasquim_admin'@'localhost';
