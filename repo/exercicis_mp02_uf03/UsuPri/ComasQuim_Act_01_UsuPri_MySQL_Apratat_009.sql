@@ -1,0 +1,1 @@
+SHOW GRANTS FOR 'comasquim_admin'@'localhost';
