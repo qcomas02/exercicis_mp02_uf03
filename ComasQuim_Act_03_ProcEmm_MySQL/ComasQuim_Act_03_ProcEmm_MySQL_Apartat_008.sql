@@ -1,7 +1,7 @@
 USE videoclub;
 
 drop procedure if exists act8;
-duse videoclub;
+use videoclub;
 drop procedure if exists act8;
 delimiter //
 create procedure act8()
@@ -36,7 +36,7 @@ begin
 close elcursor;
 end//
 delimiter ;
-call act8();elimiter / / create procedure act8() begin
+call act8();delimiter / / create procedure act8() begin
 declare recaptat bigint default 0;
 declare pressu bigint default 0;
 declare titol varchar(30);
