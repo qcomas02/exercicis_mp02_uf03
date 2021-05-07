@@ -6,7 +6,7 @@ Revisió dels exercicis de la **unitat formativa 3** del **mòdul professional 2
 |--------|------|---------|----|
 |**Enunciat 9**||FET|?????|
 |**Enunciat 11**|FET|?????|?????|
-|**Enunciat 12**|?????|?????|?????|
+|**Enunciat 12**|FET|?????|?????|
 |**Enunciat 13**|?????|?????|?????|
 
 
@@ -579,17 +579,61 @@ Query OK, 0 rows affected (0.01 sec)
 
 **2. Contingut del fitxer**
 ```sql
-   <El codi del vostre fitxer>
+  USE videoclub;
+DROP FUNCTION IF EXISTS act11;
+
+DELIMITER //
+CREATE FUNCTION act11(peCodiPeli SMALLINT UNSIGNED) 
+       RETURNS SMALLINT UNSIGNED
+       DETERMINISTIC
+
+BEGIN
+   DECLARE QtatPrestecs SMALLINT UNSIGNED;
+   SELECT   COUNT(*)
+        INTO QtatPrestecs
+   FROM     PRESTECS
+   WHERE    id_peli = peCodiPeli;
+
+   RETURN QtatPrestecs;
+END//
+DELIMITER ;
+ SELECT  titol_peli Titol, act11(1) "Quantitat exemplars"
+   FROM    PELLICULES
+   WHERE   id_peli = 1;
+
 ```
 
 **3. Sortida de la creació del procediment**
 ```sql
-   <La sortida de la creació del vostre procediment>
+    CREATE FUNCTION act11(peCodiPeli SMALLINT UNSIGNED)
+    ->        RETURNS SMALLINT UNSIGNED
+    ->        DETERMINISTIC
+    ->
+    -> BEGIN
+    ->    DECLARE QtatPrestecs SMALLINT UNSIGNED;
+    ->    SELECT   COUNT(*)
+    ->         INTO QtatPrestecs
+    ->    FROM     PRESTECS
+    ->    WHERE    id_peli = peCodiPeli;
+    ->
+    ->    RETURN QtatPrestecs;
+    -> END//
+Query OK, 0 rows affected (0.00 sec)
+
 ```
 
 **4. Sortida de l'execució del procediment**
 ```sql
-   <La sortida de l'execució del vostre procediment>
+   SELECT  titol_peli Titol, act11(1) "Quantitat exemplars"
+    ->    FROM    PELLICULES
+    ->    WHERE   id_peli = 1;
++-------------+---------------------+
+| Titol       | Quantitat exemplars |
++-------------+---------------------+
+| La busqueda |                   3 |
++-------------+---------------------+
+1 row in set (0.00 sec)
+
 ```
 
 ---
@@ -599,6 +643,7 @@ Query OK, 0 rows affected (0.01 sec)
 ## Dissenya una funció que rebi el codi d’una pel·lícula i torni el nom i cognoms del seu actor principal.<br>Utilitza aquesta funció per llistar el títol de la pel·lícula i el nom i cognoms del seu actor principal.
 
 **1. Enllaç al fitxer**
+[Act012.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MYSQL_Apartat_012.sql)
 
 **2. Contingut del fitxer**
 ```sql
