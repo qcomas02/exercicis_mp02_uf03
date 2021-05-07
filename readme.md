@@ -5,8 +5,7 @@ Revisió dels exercicis de la **unitat formativa 3** del **mòdul professional 2
 |Enunciat|Fitxer|Comentari|Nota|
 |--------|------|---------|----|
 |**Enunciat 9**|[Act09.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_009.sql)|FET|?????|
-|**Enunciat 11**|[Act011.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_011.sql)
-|FET|?????|
+|**Enunciat 11**|[Act011.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_011.sql)|FET|?????|
 |**Enunciat 12**|[Act012.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MYSQL_Apartat_012.sql)|FET|?????|
 |**Enunciat 13**|?????|?????|?????|
 
