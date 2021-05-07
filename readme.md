@@ -4,241 +4,11 @@ Revisió dels exercicis de la **unitat formativa 3** del **mòdul professional 2
 
 |Enunciat|Fitxer|Comentari|Nota|
 |--------|------|---------|----|
-|**Enunciat 9**||FET|?????|
-|**Enunciat 11**|FET|?????|?????|
-|**Enunciat 12**|FET|?????|?????|
+|**Enunciat 9**|[Act09.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_009.sql)|FET|?????|
+|**Enunciat 11**|[Act011.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_011.sql)
+|FET|?????|
+|**Enunciat 12**|[Act012.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MYSQL_Apartat_012.sql)|FET|?????|
 |**Enunciat 13**|?????|?????|?????|
-
-
-# Exemple de correcció
-
-Cal que ompliu el fitxer **```README.md```** del vostre repositori amb la següent informació per a cadascun dels enunciats.
-
-# **Enunciat 8**:
-
-## Emprant l’**activitat 6**, dissenya un cursor que llisti els mateixos camps per a totes les pel·lícules.
-
-**1. Enllaç al fitxer**
-
-[Act08.sql](https://github.com/joanpardogine/exercicis_mp02_uf03/blob/master/Cursors/Act08.sql)
-
-**2. Contingut del fitxer**
-
-```sql
-use videoclub;
-drop procedure if exists act8;
-delimiter //
-create procedure act8()
-begin
-   declare recaptat bigint default 0;
-   declare pressu bigint default 0;
-   declare titol varchar(40);
-   declare rendibilitat varchar(15);
-   declare final int default false;
-   
-   declare elcursor cursor for
-      select titol_peli, recaudacio_peli, pressupost_peli
-      from PELLICULES;
-
-   declare continue handler for not found set final = 1;
-   open elcursor;
-   elbucle:loop
-      fetch elcursor into titol, recaptat, pressu;
-      
-      if final = 1 then
-         leave elbucle;
-      end if;
-      
-      if (pressu>recaptat) then
-         set rendibilitat = "Deficitari";
-      elseif (pressu*2 > recaptat) then
-         set rendibilitat = "Suficient";
-      else
-         set rendibilitat = "Bona";
-      end if;
-      
-      select titol, rendibilitat;
-   
-   end loop elbucle; 
-   close elcursor;
-end//
-
-delimiter ;
-
--- call act8();
-```
-
-**3. Sortida de la creació del procediment**
-```sql
-mysql> use videoclub;
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-mysql> drop procedure if exists act8;
-Query OK, 0 rows affected (1.69 sec)
-
-mysql> delimiter //
-mysql> create procedure act8()
-    -> begin
-    ->    declare recaptat bigint default 0;
-    ->    declare pressu bigint default 0;
-    ->    declare titol varchar(40);
-    ->    declare rendibilitat varchar(15);
-    ->    declare final int default false;
-    ->    
-    ->    declare elcursor cursor for
-    ->       select titol_peli, recaudacio_peli, pressupost_peli
-    ->       from PELLICULES;
-    -> 
-    ->    declare continue handler for not found set final = 1;
-    ->    open elcursor;
-    ->    elbucle:loop
-    ->       fetch elcursor into titol, recaptat, pressu;
-    ->       
-    ->       if final = 1 then
-    ->          leave elbucle;
-    ->       end if;
-    ->       
-    ->       if (pressu>recaptat) then
-    ->          set rendibilitat = "Deficitari";
-    ->       elseif (pressu*2 > recaptat) then
-    ->          set rendibilitat = "Suficient";
-    ->       else
-    ->          set rendibilitat = "Bona";
-    ->       end if;
-    ->       
-    ->       select titol, rendibilitat;
-    ->    
-    ->    end loop elbucle; 
-    ->    close elcursor;
-    -> end//
-Query OK, 0 rows affected (0.02 sec)
-
-mysql> 
-mysql> delimiter ;
-mysql> 
-```
-
-**4. Sortida de l'execució del procediment**
-```sql
-mysql> call act8();
-+-------------+--------------+
-| titol       | rendibilitat |
-+-------------+--------------+
-| LA BUSQUEDA | Suficient    |
-+-------------+--------------+
-1 row in set (0.00 sec)
-
-+-------------+--------------+
-| titol       | rendibilitat |
-+-------------+--------------+
-| LA TERMINAL | Bona         |
-+-------------+--------------+
-1 row in set (0.00 sec)
-
-+-------------+--------------+
-| titol       | rendibilitat |
-+-------------+--------------+
-| Mar adentro | Bona         |
-+-------------+--------------+
-1 row in set (0.00 sec)
-
-+-----------+--------------+
-| titol     | rendibilitat |
-+-----------+--------------+
-| Colateral | Bona         |
-+-----------+--------------+
-1 row in set (0.00 sec)
-
-+--------------------+--------------+
-| titol              | rendibilitat |
-+--------------------+--------------+
-| Los 4 fantásticos  | Suficient    |
-+--------------------+--------------+
-1 row in set (0.00 sec)
-
-+----------+--------------+
-| titol    | rendibilitat |
-+----------+--------------+
-| Sin City | Suficient    |
-+----------+--------------+
-1 row in set (0.00 sec)
-
-+----------+--------------+
-| titol    | rendibilitat |
-+----------+--------------+
-| IRON MAN | Bona         |
-+----------+--------------+
-1 row in set (0.00 sec)
-
-+----------------+--------------+
-| titol          | rendibilitat |
-+----------------+--------------+
-| Los Vengadores | Bona         |
-+----------------+--------------+
-1 row in set (0.00 sec)
-
-+----------------------------------+--------------+
-| titol                            | rendibilitat |
-+----------------------------------+--------------+
-| Los Vengadores: La era de Ultron | Bona         |
-+----------------------------------+--------------+
-1 row in set (0.00 sec)
-
-+----------------------------------+--------------+
-| titol                            | rendibilitat |
-+----------------------------------+--------------+
-| La busqueda 2: El diario secreto | Bona         |
-+----------------------------------+--------------+
-1 row in set (0.00 sec)
-
-+------------+--------------+
-| titol      | rendibilitat |
-+------------+--------------+
-| IRON MAN 2 | Bona         |
-+------------+--------------+
-1 row in set (0.00 sec)
-
-+------------+--------------+
-| titol      | rendibilitat |
-+------------+--------------+
-| Iron Man 3 | Bona         |
-+------------+--------------+
-1 row in set (0.00 sec)
-
-+---------------------------------------+--------------+
-| titol                                 | rendibilitat |
-+---------------------------------------+--------------+
-| Capitán América: El primer vengador   | Bona         |
-+---------------------------------------+--------------+
-1 row in set (0.00 sec)
-
-+-------------------------------------------+--------------+
-| titol                                     | rendibilitat |
-+-------------------------------------------+--------------+
-| Capitán América: El Soldado de Invierno   | Bona         |
-+-------------------------------------------+--------------+
-1 row in set (0.01 sec)
-
-+------------------------------+--------------+
-| titol                        | rendibilitat |
-+------------------------------+--------------+
-| Capitán América: Civil War   | Bona         |
-+------------------------------+--------------+
-1 row in set (0.01 sec)
-
-+-------+--------------+
-| titol | rendibilitat |
-+-------+--------------+
-| Joker | Deficitari   |
-+-------+--------------+
-1 row in set (0.01 sec)
-
-Query OK, 0 rows affected (0.01 sec)
-```
-
----
 
 # **Enunciat 9**:
 
@@ -577,6 +347,8 @@ Query OK, 0 rows affected (0.01 sec)
 
 **1. Enllaç al fitxer**
 
+[Act011.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_011.sql)
+
 **2. Contingut del fitxer**
 ```sql
   USE videoclub;
@@ -635,7 +407,6 @@ Query OK, 0 rows affected (0.00 sec)
 1 row in set (0.00 sec)
 
 ```
-
 ---
 
 # **Enunciat 12**:
