@@ -245,6 +245,7 @@ Query OK, 0 rows affected (0.01 sec)
 ## Emprant l’**activitat 7**, dissenya un cursor que llisti els mateixos camps per a tots els intèrprets.
 
 **1. Enllaç al fitxer**
+[Act09.sql](https://github.com/qcomas02/exercicis_mp02_uf03/blob/master/ComasQuim_Act_03_ProcEmm_MySQL/ComasQuim_Act_03_ProcEmm_MySQL_Apartat_009.sql)
 
 **2. Contingut del fitxer**
 ```sql
@@ -601,17 +602,88 @@ Query OK, 0 rows affected (0.01 sec)
 
 **2. Contingut del fitxer**
 ```sql
-   <El codi del vostre fitxer>
+USE videoclub;
+DROP FUNCTION IF EXISTS act12;
+DELIMITER //
+CREATE FUNCTION act12(CodiPeli SMALLINT UNSIGNED) 
+       RETURNS Smallint
+       DETERMINISTIC
+BEGIN
+   DECLARE idActor Smallint UNSIGNED;
+DECLARE final int default false;
+ 
+DECLARE elcursor cursor for
+       SELECT   id_actor
+   FROM     ACTORS_PELLICULES
+   WHERE    id_peli = CodiPeli
+   AND principal = 1;
+   
+ DECLARE continue handler for not found SET final = 1;
+   open elcursor;
+   bucle:loop
+      fetch elcursor into idActor;
+
+      if final = 1 then
+         leave bucle;
+      end if;
+	
+	RETURN idActor;
+   END loop bucle;
+   close elcursor;
+   
+END//
+DELIMITER ;
+
+SELECT ACTORS.nom_actor, PELLICULES.titol_peli
+FROM ACTORS , PELLICULES
+WHERE id_actor = act12(2) AND id_peli = 2;
 ```
 
 **3. Sortida de la creació del procediment**
 ```sql
-   <La sortida de la creació del vostre procediment>
+   CREATE FUNCTION act12(CodiPeli SMALLINT UNSIGNED)
+    ->        RETURNS Smallint
+    ->        DETERMINISTIC
+    -> BEGIN
+    ->    DECLARE idActor Smallint UNSIGNED;
+    -> DECLARE final int default false;
+    ->
+    -> DECLARE elcursor cursor for
+    ->        SELECT   id_actor
+    ->    FROM     ACTORS_PELLICULES
+    ->    WHERE    id_peli = CodiPeli
+    ->    AND principal = 1;
+    ->
+    ->  DECLARE continue handler for not found SET final = 1;
+    ->    open elcursor;
+    ->    bucle:loop
+    ->       fetch elcursor into idActor;
+    ->
+    ->       if final = 1 then
+    ->          leave bucle;
+    ->       end if;
+    ->
+    -> RETURN idActor;
+    ->    END loop bucle;
+    ->    close elcursor;
+    ->
+    -> END//
+Query OK, 0 rows affected (0.00 sec)
+
 ```
 
 **4. Sortida de l'execució del procediment**
 ```sql
-   <La sortida de l'execució del vostre procediment>
+    SELECT ACTORS.nom_actor, PELLICULES.titol_peli
+    -> FROM ACTORS , PELLICULES
+    -> WHERE id_actor = act12(2) AND id_peli = 2;
++-----------+-------------+
+| nom_actor | titol_peli  |
++-----------+-------------+
+| Tom Hanks | La terminal |
++-----------+-------------+
+1 row in set (0.00 sec)
+
 ```
 
 ---
